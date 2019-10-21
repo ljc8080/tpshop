@@ -1,0 +1,391 @@
+<title>设置-个人信息</title>
+<link rel="icon" href="/assets/img/favicon.ico">
+<link rel="stylesheet" type="text/css" href="/static/home/css/pages-seckillOrder.css" />
+
+
+<!--header-->
+<div id="account">
+	<div class="py-container">
+		<div class="yui3-g home">
+			<!--左侧列表-->
+			{include file='/Common/left_menu' /}
+
+			<!--右侧主内容-->
+			<div class="yui3-u-5-6">
+				<div class="body userInfo">
+					<ul class="sui-nav nav-tabs nav-large nav-primary ">
+						<li class="active"><a href="#one" data-toggle="tab">基本资料</a></li>
+						<li><a href="#two" data-toggle="tab">头像照片</a></li>
+					</ul>
+					<div class="tab-content ">
+						<div id="one" class="tab-pane active">
+							<form id="form-msg" class="sui-form form-horizontal">
+								<div class="control-group">
+									<label for="inputName" class="control-label">昵称：</label>
+									<div class="controls">
+										<input type="text" id="inputName" name="nickname" placeholder="昵称"
+											value="{$userinfo.nickname}">
+									</div>
+								</div>
+
+								<div class="control-group">
+									<label for="inputGender" class="control-label">性别：</label>
+									<div class="controls" >
+										<label data-toggle="radio"
+											class="radio-pretty inline {if isset($userinfo.sex)&&$userinfo.sex==0}checked{/if}">
+											<input type="radio" name="gender" value="0" {if isset($userinfo.sex)&&$userinfo.sex==0}checked="checked"{/if}><span>男</span>
+										</label>
+										<label data-toggle="radio"
+											class="radio-pretty inline {if isset($userinfo.sex)&&$userinfo.sex==1}checked{/if}">
+											<input type="radio" name="gender" value="1" {if isset($userinfo.sex)&&$userinfo.sex==1}checked="checked"{/if}><span>女</span>
+										</label>
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="inputPassword" class="control-label">生日：</label>
+									<div class="controls">
+										<select id="select_year2" rel="{$userinfo.birthday.0|default=''}"></select>年
+										<select id="select_month2" rel="{$userinfo.birthday.1|default=''}"></select>月
+										<select id="select_day2" rel="{$userinfo.birthday.2|default=''}"></select>日
+									</div>
+								</div>
+
+
+								<div class="control-group">
+									<label for="inputPassword" class="control-label">所在地：</label>
+									<div class="controls">
+										<div data-toggle="distpicker">
+											<div class="form-group area">
+												<select class="form-control" id="province1" data-province="{if isset($userinfo.place.0)}{$userinfo.place.0}{/if}"></select>
+											</div>
+											<div class="form-group area">
+												<select class="form-control" id="city1" data-city="{if isset($userinfo.place.1)}{$userinfo.place.1}{/if}"></select>
+											</div>
+											<div class="form-group area">
+												<select class="form-control" id="district1" data-district="{if isset($userinfo.place.2)}{$userinfo.place.2}{/if}"></select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="inputJob" class="control-label">职业：</label>
+
+									<div class="controls"><span class="sui-dropdown dropdown-bordered select"><span
+												class="dropdown-inner"><a role="button" data-toggle="dropdown" href="#"
+													class="dropdown-toggle">
+													<input name="job" type="hidden" data-rules="required"><i
+														class="caret"></i><span>请选择</span></a>
+
+												<ul id="menu2" role="menu" aria-labelledby="drop4"
+													class="sui-dropdown-menu">
+													<li role="presentation"><a role="menuitem" tabindex="-1"
+															href="javascript:void(0);" value="bj">程序员</a></li>
+
+												</ul>
+
+											</span>
+										</span>
+									</div>
+
+									<div class="controls"><span class="sui-dropdown dropdown-bordered select"><span
+												class="dropdown-inner"><a role="button" data-toggle="dropdown" href="#"
+													class="dropdown-toggle">
+													<input name="job1" type="hidden" data-rules="required"><i
+														class="caret"></i><span>请选择</span></a>
+												<ul id="menu3" role="menu" aria-labelledby="drop4"
+													class="sui-dropdown-menu">
+													<li role="presentation"><a role="menuitem" tabindex="-1"
+															href="javascript:void(0);" value="bj">程序员</a></li>
+												</ul>
+											</span>
+										</span>
+									</div>
+
+									<div class="controls">
+										<span class="sui-dropdown dropdown-bordered select">
+											<span class="dropdown-inner"><a role="button" data-toggle="dropdown"
+													href="#" class="dropdown-toggle">
+													<input name="job2" type="hidden" data-rules="required"><i
+														class="caret"></i><span>请选择</span></a>
+												<ul id="menu4" role="menu" aria-labelledby="drop4"
+													class="sui-dropdown-menu">
+													<li role="presentation"><a role="menuitem" tabindex="-1"
+															href="javascript:void(0);" value="bj">程序员</a></li>
+												</ul>
+											</span>
+										</span>
+									</div>
+
+
+								</div>
+								<div class="control-group">
+									<label for="sanwei" class="control-label"></label>
+									<div class="controls">
+										<button type="submit" class="sui-btn btn-primary">修改</button>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div id="two" class="tab-pane">
+
+							<div class="new-photo">
+								<p>当前头像：</p>
+								<div class="upload">
+									<img id="imgShow_WU_FILE_0" width="100" height="100"
+									{if isset($userinfo.figure_url)}
+										src="{$userinfo.figure_url}"
+									{else}
+									src="/static/home/img/_/photo_icon.png"
+									{/if}
+										alt="">
+									<input type="file" id="up_img_WU_FILE_0" />
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript" src="/static/home/js/pages/main.js"></script>
+<script>
+	$(function () {
+		var job2_id = null;
+		$('#menu3 li').hide();
+		$('#menu4 li').hide();
+		class getjob {
+			menu2() {
+				$.get("http://www.pyg.com/usercenter/info/job",
+					function (data, textStatus, jqXHR) {
+						if (data.code != 200) {
+							alert(data.msg);
+						} else {
+							for (var k in data.data) {
+								if ({$userjob } != [] && {$userjob}[0] == data.data[k].id) {
+									let str = `<input name='job2' type='hidden' data-rules='required'><i class='caret'></i><span>${data.data[k].job_name}</span>`;
+									$('#menu2').prev().html(str);
+								}
+								$('#menu2 li:eq(0)').clone(true).appendTo('#menu2');
+								$('#menu2 li a').eq(k).attr('value', data.data[k].id);
+								$('#menu2 li a').eq(k).text(data.data[k].job_name);
+							}
+							$('#menu2 li').last().remove();
+						}
+					},
+					"json"
+				);
+			}
+
+			menu3(job_id) {
+				$.get("http://www.pyg.com/usercenter/info/job", { 'pid': job_id },
+					function (data, textStatus, jqXHR) {
+						//console.log(data);
+						if (data.code != 200) {
+							alert(data.msg);
+						} else {
+							$('#menu3 li:eq(0)').show();
+							for (var k in data.data) {
+								if ({$userjob}[1] == data.data[k].id) {
+									let str = `<input name='job2' type='hidden' data-rules='required'><i class='caret'></i><span>${data.data[k].job_name}</span>`;
+									$('#menu3').prev().html(str);
+								}
+								$('#menu3 li:eq(0)').clone(true).appendTo('#menu3');
+								$('#menu3 li a').last().attr('value', data.data[k].id);
+								$('#menu3 li a').last().text(data.data[k].job_name);
+							}
+							$('#menu3 li').first().remove();
+						}
+					},
+					"json"
+				);
+			}
+
+			menu4(job_id) {
+				$.get("http://www.pyg.com/usercenter/info/job", { 'pid': job_id },
+					function (data, textStatus, jqXHR) {
+						//console.log(data);
+						if (data.code != 200) {
+							alert(data.msg);
+						} else {
+							$('#menu4 li:eq(0)').show();
+							for (var k in data.data) {
+								if ({$userjob}[2] == data.data[k].id) {
+									let str = `<input name='job2' type='hidden' data-rules='required'><i class='caret'></i><span>${data.data[k].job_name}</span>`;
+									job2_id =data.data[k].id;
+									$('#menu4').prev().html(str);
+								}
+								$('#menu4 li:eq(0)').clone(true).appendTo('#menu4');
+								$('#menu4 li a').last().attr('value', data.data[k].id);
+								$('#menu4 li a').last().text(data.data[k].job_name);
+							}
+							$('#menu4 li').first().remove();
+						}
+					},
+					"json"
+				);
+			}
+		}
+
+var c = new getjob();
+c.menu2();
+if({$userjob}.length!=0){
+	c.menu3({$userjob}[0]);
+	c.menu4({$userjob}[1]);
+}
+
+		function job() {
+			var job_id = null;
+			var job1_id = null;
+			var str = "<input name='job2' type='hidden' data-rules='required'><i class='caret'></i><span>请选择</span>";
+			$("#menu2").on('click', 'a', function (e) {
+				job_id = $(this).attr('value');
+				if (!job_id) {
+					return;
+				}
+				$('#menu3').prev().html(str);
+				$('#menu4').prev().html(str);
+				$.get("http://www.pyg.com/usercenter/info/job", { 'pid': job_id },
+					function (data, textStatus, jqXHR) {
+						//console.log(data);
+						if (data.code != 200) {
+							alert(data.msg);
+						} else {
+							$('#menu3 li:eq(0)').show();
+							if (sessionStorage.getItem('menu3')) {
+								$('#menu3 li').first().nextAll().remove();
+							} else {
+								sessionStorage.setItem('menu3', 1);
+							}
+							for (var k in data.data) {
+								$('#menu3 li:eq(0)').clone(true).appendTo('#menu3');
+								$('#menu3 li a').last().attr('value', data.data[k].id);
+								$('#menu3 li a').last().text(data.data[k].job_name);
+							}
+							$('#menu3 li').first().remove();
+						}
+					},
+					"json"
+				);
+			})
+			$("#menu3").on('click', 'a', function (e) {
+				job1_id = $(this).attr('value');
+				if (!job1_id) {
+					return;
+				}
+				$('#menu4').prev().html(str);
+				$.get("http://www.pyg.com/usercenter/info/job", { 'pid': job1_id },
+					function (data, textStatus, jqXHR) {
+						//console.log(data);
+						if (data.code != 200) {
+							alert(data.msg);
+						} else {
+							$('#menu4 li:eq(0)').show();
+							if (sessionStorage.getItem('menu4')) {
+								$('#menu4 li').first().nextAll().remove();
+							} else {
+								sessionStorage.setItem('menu4', 1);
+							}
+							for (var k in data.data) {
+								$('#menu4 li:eq(0)').clone(true).appendTo('#menu4');
+								$('#menu4 li a').last().attr('value', data.data[k].id);
+								$('#menu4 li a').last().text(data.data[k].job_name);
+							}
+							$('#menu4 li').first().remove();
+						}
+					},
+					"json"
+				);
+			})
+
+			$('#menu4').on('click','a',function(){
+				job2_id = $(this).attr('value')
+			})
+		}
+		job();
+
+		$('#select_year2').change(function(){
+			$(this).attr('rel',$(this).val());
+		})
+
+		$('#select_month2').change(function(){
+			$(this).attr('rel',$(this).val());
+		})
+
+		$('#select_day2').change(function(){
+			$(this).attr('rel',$(this).val());
+		})
+
+		$.ms_DatePicker({
+			YearSelector: "#select_year2",
+			MonthSelector: "#select_month2",
+			DaySelector: "#select_day2"
+		});
+//#form-msg
+		$('#form-msg').submit(function(e){
+			e.preventDefault();
+			let nickname = $('#inputName').val();
+			let sex = $('[name="gender"]:checked').val();
+			let year = $('#select_year2').attr('rel');
+			let month = $('#select_month2').attr('rel');
+			let day = $('#select_day2').attr('rel');
+			let sheng  = $('#province1').children(':selected').val();
+			let city  = $('#city1').children(':selected').val();
+			let qu  = $('#district1').children(':selected').val();
+			let birthday = '';
+			if(year!=''||month!=''||day!=''){
+				birthday = year+'/'+month+'/'+day
+			}
+			let place = sheng+'_'+city+'_'+qu;
+			let job = job2_id?job2_id:'';
+			let data = {
+				nickname,
+				sex,
+				birthday,
+				place,
+				job
+			}
+			$.ajax({
+				type: "post",
+				url: "http://www.pyg.com/usercenter/info/edit",
+				data:data,
+				dataType: "json",
+				success: function (response) {
+					console.log(response)
+					if(response.code!=200){
+						layer.msg('修改失败', {icon: 5});
+					}else{
+						location.reload(true)
+					}
+				}
+			});
+		})
+
+		$('#up_img_WU_FILE_0').change(function(){
+			console.log(this.files[0])
+			var formdata = new FormData();
+			formdata.append('figure_url',this.files[0]);
+			$.ajax({
+				type: "post",
+				url: "http://www.pyg.com/usercenter/info/editheader",
+				data: formdata,
+				"contentType":false,
+                "processData":false,
+				dataType: "json",
+				success: function (response) {
+					console.log(response)
+					if(response.code!=200){
+						layer.msg('修改失败,'+response.msg, {icon: 5});
+					}else{
+						let src = response.data;
+						$('#imgShow_WU_FILE_0').attr('src',src);
+						$('.person-photo img').attr('src',src);
+					}
+				}
+			});
+		})
+	});
+</script>

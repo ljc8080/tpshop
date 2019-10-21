@@ -1,0 +1,168 @@
+<title>设置-个人信息</title>
+<link rel="icon" href="/assets/img/favicon.ico">
+
+<link rel="stylesheet" type="text/css" href="/static/home/css/pages-seckillOrder.css" />
+
+
+<!--header-->
+<div id="account">
+	<div class="py-container">
+		<div class="yui3-g home">
+			{include file="common/left_menu"/}
+			<!--右侧主内容-->
+			<div class="yui3-u-5-6">
+				<div class="body userSafe">
+					<ul class="sui-nav nav-tabs nav-large nav-primary ">
+						<li class="active"><a href="#one" data-toggle="tab">密码设置</a></li>
+						<li><a href="#two" data-toggle="tab">绑定手机</a></li>
+					</ul>
+					<div class="tab-content ">
+						<div id="one" class="tab-pane active">
+							<form class="sui-form form-horizontal sui-validate" id="jsForm">
+								<div class="control-group">
+									<label for="inputusername" class="control-label">用户名：</label>
+									<div class="controls">
+										<input id="pwdid" class="fn-tinput" data-rule-remote="http://www.baidu.com"
+											type="text" name="OldPassword" placeholder="输入昵称" required
+											data-msg-required="请输入昵称" minlength="6" data-msg-minlength="至少输入6个字符"
+											value="{$Think.session.home_userinfo.nickname}" disabled='disabled' />
+
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="inputPassword" class="control-label">密码：</label>
+									<div class="controls">
+										<input class="fn-tinput" type="password" name="password" value=""
+											placeholder="新密码" required id="password">
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="inputRepassword" class="control-label">重复密码：</label>
+									<div class="controls">
+										<input class="fn-tinput" type="password" name="confirm_password" value=""
+											placeholder="确认新密码" required equalTo="#password">
+									</div>
+								</div>
+
+								<div class="control-group">
+									<label class="control-label"></label>
+									<div class="controls">
+										<button type="submit" class="sui-btn btn-primary">提交按钮</button>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div id="two" class="tab-pane">
+							<!--步骤条-->
+							<div class="sui-steps steps-auto">
+								<div class="wrap">
+									<div class="finished">
+										<label><span class="round"><i
+													class="sui-icon icon-pc-right"></i></span><span>第一步
+												验证身份</span></label><i class="triangle-right-bg"></i><i
+											class="triangle-right"></i>
+									</div>
+								</div>
+								<div class="wrap">
+									<div class="todo">
+										<label><span class="round">2</span><span>第二步 绑定新手机号</span></label><i
+											class="triangle-right-bg"></i><i class="triangle-right"></i>
+									</div>
+								</div>
+								<div class="wrap">
+									<div class="todo">
+										<label><span class="round">3</span><span>第三步 完成</span></label>
+									</div>
+								</div>
+							</div>
+
+							<!--表单-->
+
+							<form class="sui-form form-horizontal sui-validate" data-toggle='validate' id="bind-form">
+
+								<div class="control-group">
+									<label for="inputPassword" class="control-label">验证方式：</label>
+									<div class="controls fixed">手机验证（{$Think.session.home_userinfo.phone|replace_phone}）
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="inputcode" class="control-label">验证码：</label>
+									<div class="controls">
+										<input name="inputcode" type="text" id="inputcode" data-msg-required="请输入验证码" required>
+									</div>
+									<div class="controls">
+										<img src="{:url('usercenter/safe/captcha')}" alt="captcha"
+											onclick="this.src='{:url(\'usercenter/safe/captcha\')}?'+Math.random()">
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="inputRepassword" class="control-label">短信验证码：</label>
+									<div class="controls">
+										<input name="msgcode" type="text" id="msgcode" required>
+									</div>
+									<div class="controls">
+										<button class="sui-btn btn-info">发送</button>
+									</div>
+								</div>
+								<div class="control-group next-btn">
+									<a class="sui-btn btn-primary"  id='editphone'>下一步</a>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+{include file="common/validate"/}
+
+<script>
+
+
+	$(function () {
+		$class = '{$Request.param.class}';
+		if ($class) {
+			$('.sui-nav li').eq(0).removeClass('active').next().addClass('active');
+			$('.tab-content').children().eq(0).removeClass('active').next().addClass('active');
+		}
+		$('#jsForm').submit(function (e) {
+			e.preventDefault();
+			let data = {
+				'password': $('[name=password]').val(),
+			}
+			$.post("http://www.pyg.com/usercenter/safe/editpass", data,
+				function (data, textStatus, jqXHR) {
+					console.log(data);
+					if (data.code != 200) {
+						layer.msg(data.msg, { icon: 5 });
+					} else {
+						layer.msg('修改成功', { icon: 6 }, function () {
+							location.href = 'http://www.pyg.com/user/logout';
+						});
+					}
+				},
+				"json"
+			);
+		})
+		$('#editphone').click(function (e) {
+			e.preventDefault();
+			$.ajax({
+				type: "post",
+				url: "{:url('usercenter/safe/index')}",
+				data: {},
+				dataType: "json",
+				success: function (response) {
+					console.log(response)
+					if(response.code==200){
+						location.href = "{:url('usercenter/safe/editphone')}"
+					}
+				}
+			});
+		})
+	})
+</script>
